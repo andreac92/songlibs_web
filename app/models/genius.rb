@@ -1,4 +1,4 @@
-class Genius < ActiveRecord::Base
+class Genius
 	include HTTParty
 
 	def initialize
