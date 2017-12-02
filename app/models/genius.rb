@@ -4,6 +4,7 @@ class Genius
 	def initialize
 		@token = Rails.application.secrets.genius_token
 		@base_uri = 'http://api.genius.com'
+		@public_uri = 'https://genius.com'
 	end
 
 	def send_request url, data
@@ -13,11 +14,11 @@ class Genius
 
 	def search query
 		response = send_request @base_uri + '/search', q: query
-		response.code == 200 ? response.body : nil
+		response.code == 200 ? JSON.parse(response.body) : nil
 	end
 
 	def scrape path
-		response = send_request @base_uri + path
+		response = HTTParty.get(@public_uri + path)
 		response.code == 200 ? response.body : nil
 	end
 end
